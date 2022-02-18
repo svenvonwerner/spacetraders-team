@@ -1,13 +1,19 @@
 import styled from 'styled-components';
+import UserStatusPage from './UserStatusPage';
+import {useNavigate} from 'react-router-dom'
 
-export default function LoginPage() {
+export default function LoginPage({token, user, onLogin, isUsernameTaken}) {
+  let navigate = useNavigate('')
+  
   return (
     <section>
       <h1>FLY AWAY...</h1>
-      <UserForm>
+      {isUsernameTaken && <p>Username already taken!</p>}
+      <UserForm onSubmit={handleSubmit}>
         <label for="username">Login and start your adventure!</label>
         <UserInput
           id="username"
+          name='username'
           placeholder="Username e.g."
           required
           type="text"
@@ -16,6 +22,13 @@ export default function LoginPage() {
       </UserForm>
     </section>
   );
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const input = form.elements.username;
+    onLogin(input.value);
+    navigate('/userstatus', {replace: true})
+  }
 }
 
 const UserForm = styled.form`

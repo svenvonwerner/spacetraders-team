@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export default function Navigation() {
   return (
     <nav>
-      <LinkButton to="/">User status</LinkButton>
+      <LinkButton to="/userstatus">User status</LinkButton>
       <LinkButton to="/ships">Available ships</LinkButton>
       <LinkButton to="/market">Marketplace</LinkButton>
     </nav>

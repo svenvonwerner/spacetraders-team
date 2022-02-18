@@ -23,15 +23,13 @@ function App() {
     <div>
       <Navigation />
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage token={token} user={user} onLogin={loginUser} isUsernameTaken={isUsernameTaken}/>} />
 
         <Route
           path="/userstatus"
           element={
             <UserStatusPage
-              onLogin={loginUser}
               user={user}
-              isUsernameTaken={isUsernameTaken}
             />
           }
         />
@@ -57,6 +55,7 @@ function App() {
       const data = await response.json();
       setToken(data.token);
       setUser(data.user);
+      
     } else {
       setIsUsernameTaken(true);
     }

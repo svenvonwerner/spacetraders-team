@@ -4,11 +4,13 @@ import ShipsPage from './pages/ShipsPage.js';
 import UserStatusPage from './pages/UserStatusPage.js';
 import MarketPage from './pages/MarketPage.js';
 import { useEffect, useState } from 'react';
+import LoginPage from './pages/LoginPage.js';
 
 function App() {
-  const [token, setToken] = useState(loadFromLocal('token'));
+  const [token, setToken] = useState('f4310eb4-0c1a-4f44-80aa-f10be7493ce6');
   const [user, setUser] = useState(null);
   const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+  const [ships, setShips] = useState([]);
 
   useEffect(() => {
     saveToLocal('token', token);
@@ -18,6 +20,23 @@ function App() {
     }
   }, [user, token]);
 
+  useEffect(() => {
+    loadShips();
+  }, []);
+
+  async function loadShips() {
+    try {
+      const token = 'f4310eb4-0c1a-4f44-80aa-f10be7493ce6';
+      const response = await fetch(
+        'https://api.spacetraders.io/systems/OE/ship-listings?token=' + token
+      );
+      const data = await response.json();
+      console.log(data.shipListings);
+      setShips(data.shipListings);
+    } catch (error) {
+      console.error('ERROR:', error);
+    }
+  }
   return (
     <div>
       <Navigation />
@@ -25,15 +44,18 @@ function App() {
         <Route
           path="/"
           element={
-            <UserStatusPage
-              onLogin={loginUser}
+            <LoginPage
+              token={token}
               user={user}
+              onLogin={loginUser}
               isUsernameTaken={isUsernameTaken}
             />
           }
         />
+
+        <Route path="/userstatus" element={<UserStatusPage user={user} />} />
         <Route path="/ships" element={<ShipsPage />} />
-        <Route path="/market" element={<MarketPage />} />
+        <Route path="/market" element={<MarketPage ships={ships} />} />
       </Routes>
     </div>
   );
@@ -52,6 +74,7 @@ function App() {
 
     if (response.ok) {
       const data = await response.json();
+      console.log(data.token);
       setToken(data.token);
       setUser(data.user);
     } else {

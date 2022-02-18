@@ -7,6 +7,8 @@ export default createGlobalStyle`
 
  body {
     font-family: sans-serif;
+    background-color: #021e3e;
+    color: gold;
  }
 
  .sr-only{

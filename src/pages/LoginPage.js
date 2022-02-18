@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 import UserStatusPage from './UserStatusPage';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-export default function LoginPage({token, user, onLogin, isUsernameTaken}) {
-  let navigate = useNavigate('')
-  
+export default function LoginPage({ token, user, onLogin, isUsernameTaken }) {
+  let navigate = useNavigate('');
+
   return (
     <section>
       <h1>FLY AWAY...</h1>
       {isUsernameTaken && <p>Username already taken!</p>}
       <UserForm onSubmit={handleSubmit}>
-        <label for="username">Login and start your adventure!</label>
+        <label htmlFor="username">Login and start your adventure!</label>
         <UserInput
           id="username"
-          name='username'
+          name="username"
           placeholder="Username e.g."
           required
           type="text"
@@ -27,7 +27,7 @@ export default function LoginPage({token, user, onLogin, isUsernameTaken}) {
     const form = event.target;
     const input = form.elements.username;
     onLogin(input.value);
-    navigate('/userstatus', {replace: true})
+    navigate('/userstatus', { replace: true });
   }
 }
 
@@ -52,7 +52,7 @@ const UserInput = styled.input`
 
 const LoginButton = styled.button`
   padding: 8px 12px;
-  width: 40%;
+  width: 140px;
   font-weight: bold;
   font-size: 112%;
   background-color: gold;

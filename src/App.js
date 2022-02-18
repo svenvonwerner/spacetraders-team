@@ -4,6 +4,7 @@ import ShipsPage from './pages/ShipsPage.js';
 import UserStatusPage from './pages/UserStatusPage.js';
 import MarketPage from './pages/MarketPage.js';
 import { useEffect, useState } from 'react';
+import LoginPage from './pages/LoginPage.js';
 
 function App() {
   const [token, setToken] = useState(loadFromLocal('token'));
@@ -22,8 +23,10 @@ function App() {
     <div>
       <Navigation />
       <Routes>
+        <Route path="/" element={<LoginPage />} />
+
         <Route
-          path="/"
+          path="/userstatus"
           element={
             <UserStatusPage
               onLogin={loginUser}

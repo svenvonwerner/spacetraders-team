@@ -5,7 +5,7 @@ export default function LoginPage() {
     <section>
       <h1>FLY AWAY...</h1>
       <UserForm>
-        <label for="username"></label>
+        <label for="username">Login and start your adventure!</label>
         <UserInput
           id="username"
           placeholder="Username e.g."

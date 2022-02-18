@@ -18,7 +18,7 @@ export default function LoginPage({ token, user, onLogin, isUsernameTaken }) {
           required
           type="text"
         ></UserInput>
-        <LoginButton type="submit">Login</LoginButton>
+        <Button type="submit">Login</Button>
       </UserForm>
     </section>
   );
@@ -50,7 +50,7 @@ const UserInput = styled.input`
   }
 `;
 
-const LoginButton = styled.button`
+export const Button = styled.button`
   padding: 8px 12px;
   width: 140px;
   font-weight: bold;

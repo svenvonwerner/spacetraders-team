@@ -5,12 +5,14 @@ import UserStatusPage from './pages/UserStatusPage.js';
 import MarketPage from './pages/MarketPage.js';
 import { useEffect, useState } from 'react';
 import LoginPage from './pages/LoginPage.js';
+import useFetch from './hooks/useFetch.js';
 
 function App() {
-  const [token, setToken] = useState('f4310eb4-0c1a-4f44-80aa-f10be7493ce6');
+  const [token, setToken] = useState(loadFromLocal('token'));
   const [user, setUser] = useState(null);
   const [isUsernameTaken, setIsUsernameTaken] = useState(false);
   const [ships, setShips] = useState([]);
+  const [data] = useFetch(token);
 
   useEffect(() => {
     saveToLocal('token', token);
@@ -21,12 +23,12 @@ function App() {
   }, [user, token]);
 
   useEffect(() => {
-    loadShips();
+    loadShips(token);
   }, []);
 
-  async function loadShips() {
+  async function loadShips(token) {
     try {
-      const token = 'f4310eb4-0c1a-4f44-80aa-f10be7493ce6';
+      // const token = 'f4310eb4-0c1a-4f44-80aa-f10be7493ce6';
       const response = await fetch(
         'https://api.spacetraders.io/systems/OE/ship-listings?token=' + token
       );
@@ -53,16 +55,19 @@ function App() {
           }
         />
 
-        <Route path="/userstatus" element={<UserStatusPage user={user} />} />
+        <Route
+          path="/userstatus"
+          element={<UserStatusPage user={user} token={token} data={data} />}
+        />
         <Route path="/ships" element={<ShipsPage />} />
-        <Route path="/market" element={<MarketPage ships={ships} />} />
+        <Route path="/market" element={<MarketPage ships={ships} user={user} token={token}/>} />
       </Routes>
     </div>
   );
 
   async function loginUser(username) {
     setIsUsernameTaken(false);
-
+    //New User
     const response = await fetch(
       `https://api.spacetraders.io/users/${username}/claim`,
       {
@@ -74,14 +79,13 @@ function App() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data.token);
       setToken(data.token);
       setUser(data.user);
     } else {
       setIsUsernameTaken(true);
     }
   }
-
+  //Old User
   async function getUserInfo(token) {
     try {
       const response = await fetch(

@@ -31,12 +31,12 @@ function App() {
         'https://api.spacetraders.io/systems/OE/ship-listings?token=' + token
       );
       const data = await response.json();
-      console.log(data.shipListings);
       setShips(data.shipListings);
     } catch (error) {
       console.error('ERROR:', error);
     }
   }
+
   return (
     <div>
       <Navigation />

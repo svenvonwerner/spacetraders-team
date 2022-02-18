@@ -13,12 +13,15 @@ export default function Navigation() {
 
 const LinkButton = styled(NavLink)`
   padding: 4px 12px;
-  border: 1px solid #bbb;
+  border: 1px solid gold;
   border-radius: 4px;
-  background-color: #eee;
+  background-color: #021e3e;
   text-decoration: none;
-  color: #333;
+  color: gold;
+  margin: 5px;
+
   &.active {
-    background-color: hotpink;
+    background-color: gold;
+    color: #021e3e;
   }
 `;

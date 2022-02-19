@@ -7,7 +7,7 @@ export default function UserStatusPage({ user, token, data }) {
   // const [loan, setLoan] = useState([]);
   const myFirstshipID = 'ckztxz0qi6083315s6qk3n5ho4';
   const [loan, setLoan] = useLocalStorage('loan', []);
-  console.log(loan.status);
+ 
   return (
     <main>
       <h1>User status</h1>
@@ -18,7 +18,7 @@ export default function UserStatusPage({ user, token, data }) {
         </UserInformation>
       )}
       <section>
-        {loan !== [] ? (
+        {loan.length !== 0 ? (
           <div>
             <p>{loan.type} </p>
             <p>{loan.due} </p>

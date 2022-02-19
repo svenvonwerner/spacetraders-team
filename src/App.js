@@ -6,6 +6,7 @@ import MarketPage from './pages/MarketPage.js';
 import { useEffect, useState } from 'react';
 import LoginPage from './pages/LoginPage.js';
 import useFetch from './hooks/useFetch.js';
+import useLocalStorage from './hooks/useLocalStorage.js';
 
 function App() {
   const [token, setToken] = useState(loadFromLocal('token'));
@@ -13,6 +14,7 @@ function App() {
   const [isUsernameTaken, setIsUsernameTaken] = useState(false);
   const [ships, setShips] = useState([]);
   const [data] = useFetch(token);
+  const [myShips, setMyShips] = useLocalStorage('myShiplist',[]);
 
   useEffect(() => {
     saveToLocal('token', token);
@@ -59,8 +61,8 @@ function App() {
           path="/userstatus"
           element={<UserStatusPage user={user} token={token} data={data} />}
         />
-        <Route path="/ships" element={<ShipsPage />} />
-        <Route path="/market" element={<MarketPage ships={ships} user={user} token={token}/>} />
+        <Route path="/ships" element={<ShipsPage myShips={myShips} />} />
+        <Route path="/market" element={<MarketPage ships={ships} user={user} token={token} myShips={myShips} setMyShips={setMyShips} />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import useLocalStorage from '../hooks/useLocalStorage.js';
 import { Button } from './LoginPage.js';
 
-export default function MarketPage({ ships, user, token }) {
-  const [myShips, setMyShips] = useState([]);
-  console.log(myShips);
+export default function MarketPage({ ships, user, token, myShips, setMyShips }) {
+
+  
   return (
     <main>
       <h1>Marketplace</h1>
@@ -32,6 +33,7 @@ export default function MarketPage({ ships, user, token }) {
       </ShipListContainer>
     </main>
   );
+  
 
   async function handleBuy(e) {
     const arrayOfLocations = ships.map(
@@ -51,7 +53,9 @@ export default function MarketPage({ ships, user, token }) {
 
     if (response.ok) {
       const data = await response.json();
-      setMyShips(...myShips, data.ship);
+      setMyShips([...myShips, data.ship]);
+      window.location.reload();
+      alert('Nice choice!!!')
     }
   }
 }

@@ -1,15 +1,17 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from './LoginPage.js';
 
-export default function MarketPage({ ships }) {
+export default function MarketPage({ ships, user, token }) {
+  const [myShips, setMyShips] = useState([]);
+  console.log(myShips);
   return (
     <main>
       <h1>Marketplace</h1>
-
+      {user && user.credits} Credits
       <p>List of ships...</p>
-
       <ShipListContainer>
-        {ships.map(ship => (
+        {ships.map((ship, index) => (
           <ShipList key={ship.type} role="list">
             <ShipListItem>Manufacturer: {ship.manufacturer}</ShipListItem>
             <ShipListItem>Type: {ship.type}</ShipListItem>
@@ -21,13 +23,37 @@ export default function MarketPage({ ships }) {
               Ship Price: {ship.purchaseLocations[0].price} Credits
             </ShipListItem>
             <div>
-              <Button>Buy</Button>
+              <Button onClick={handleBuy} value={index}>
+                Buy
+              </Button>
             </div>
           </ShipList>
         ))}
       </ShipListContainer>
     </main>
   );
+
+  async function handleBuy(e) {
+    const arrayOfLocations = ships.map(
+      ship => ship.purchaseLocations[0].location
+    );
+    const arrayOfTypes = ships.map(ship => ship.type);
+    const response = await fetch(
+      `https://api.spacetraders.io/my/ships?token=${token}&location=${
+        arrayOfLocations[e.target.value]
+      }&type=${arrayOfTypes[e.target.value]}`,
+      {
+        method: 'POST',
+      }
+    ).catch(error => {
+      console.log('ERROR', error.message);
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setMyShips(...myShips, data.ship);
+    }
+  }
 }
 
 const ShipListContainer = styled.section`

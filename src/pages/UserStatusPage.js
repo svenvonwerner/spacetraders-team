@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import { Button } from './LoginPage.js';
-// import { useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage.js';
 
 export default function UserStatusPage({ user, token, data }) {
-  // const [loan, setLoan] = useState([]);
-  const myFirstshipID = 'ckztxz0qi6083315s6qk3n5ho4';
   const [loan, setLoan] = useLocalStorage('loan', []);
  
   return (

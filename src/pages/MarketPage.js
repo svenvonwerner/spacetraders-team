@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import useLocalStorage from '../hooks/useLocalStorage.js';
 import { Button } from './LoginPage.js';
 
 export default function MarketPage({ ships, user, token, myShips, setMyShips }) {

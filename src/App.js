@@ -25,22 +25,6 @@ function App() {
     }
   }, [user, token]);
 
-  // useEffect(() => {
-  //   loadShips(token);
-  // }, []);
-
-  // async function loadShips(token) {
-  //   try {
-  //     const response = await fetch(
-  //       'https://api.spacetraders.io/systems/OE/ship-listings?token=' + token
-  //     );
-  //     const data = await response.json();
-  //     setShips(data.shipListings);
-  //   } catch (error) {
-  //     console.error('ERROR:', error);
-  //   }
-  // }
-
   return (
     <div>
       <Navigation />

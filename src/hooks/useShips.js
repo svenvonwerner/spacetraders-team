@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react';
 export default function useShips(token) {
   const [data, setData] = useState([]);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   async function fetchData() {
     try {
-      
       const response = await fetch(
         'https://api.spacetraders.io/systems/OE/ship-listings?token=' + token
       );
@@ -15,10 +18,6 @@ export default function useShips(token) {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return [data];
 }

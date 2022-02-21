@@ -35,7 +35,6 @@ describe('LoginPage', () => {
 
     const input = screen.getByRole('textbox');
     const submitButton = screen.getByRole('button');
-    // const paragraph = screen.getByRole('paragraph');
 
     userEvent.type(input, 'Hennifant');
     userEvent.click(submitButton);
@@ -44,19 +43,17 @@ describe('LoginPage', () => {
   });
 
   it('does not submit form if the input is empty', () => {
-    const handleSubmit = jest.fn();
+    const loginUser = jest.fn();
     render(
       <MemoryRouter>
-        <LoginPage onSubmit={handleSubmit} />
+        <LoginPage onLogin={loginUser} />
       </MemoryRouter>
     );
-
     const input = screen.getByRole('textbox');
-    const submitButton = screen.getByRole('button');
+    const submitButton = screen.getByRole('button', { name: /login/i });
 
-    userEvent.type(input, 'asd');
     userEvent.click(submitButton);
 
-    expect(handleSubmit).not.toHaveBeenCalled();
+    expect(input.value).toBeFalsy();
   });
 });

@@ -8,6 +8,17 @@ import LoginPage from './pages/LoginPage.js';
 import useFetch from './hooks/useFetch.js';
 import useLocalStorage from './hooks/useLocalStorage.js';
 import useShips from './hooks/useShips.js';
+import { ErrorBoundary } from 'react-error-boundary';
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: 'red' }}>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+}
 
 function App() {
   const [token, setToken] = useState(loadFromLocal('token'));
@@ -27,38 +38,40 @@ function App() {
 
   return (
     <div>
-      <Navigation />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <LoginPage
-              token={token}
-              user={user}
-              onLogin={loginUser}
-              isUsernameTaken={isUsernameTaken}
-            />
-          }
-        />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Navigation />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <LoginPage
+                token={token}
+                user={user}
+                onLogin={loginUser}
+                isUsernameTaken={isUsernameTaken}
+              />
+            }
+          />
 
-        <Route
-          path="/userstatus"
-          element={<UserStatusPage user={user} token={token} data={data} />}
-        />
-        <Route path="/ships" element={<ShipsPage myShips={myShips} />} />
-        <Route
-          path="/market"
-          element={
-            <MarketPage
-              ships={ships}
-              user={user}
-              token={token}
-              myShips={myShips}
-              setMyShips={setMyShips}
-            />
-          }
-        />
-      </Routes>
+          <Route
+            path="/userstatus"
+            element={<UserStatusPage user={user} token={token} data={data} />}
+          />
+          <Route path="/ships" element={<ShipsPage myShips={myShips} />} />
+          <Route
+            path="/market"
+            element={
+              <MarketPage
+                ships={ships}
+                user={user}
+                token={token}
+                myShips={myShips}
+                setMyShips={setMyShips}
+              />
+            }
+          />
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 

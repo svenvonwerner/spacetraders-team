@@ -23,7 +23,7 @@ export default function UserStatusPage({ user, token, data }) {
             <p>{loan.status} </p>
           </div>
         ) : (
-          data.map(loan => (
+          data?.map(loan => (
             <div key={loan.type}>
               <p>{loan.amount} Credits</p>
               <p>Rate: {loan.rate}</p>

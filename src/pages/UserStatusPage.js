@@ -51,7 +51,7 @@ export default function UserStatusPage({ user, token, data }) {
       const data = await response.json();
       setLoan(data.loan);
       window.location.reload();
-      alert('Transaction successfull!');
+      alert('Transaction successfully!');
     }
   }
 }

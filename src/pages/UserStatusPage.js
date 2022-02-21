@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import { Button } from './LoginPage.js';
-// import { useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage.js';
 
 export default function UserStatusPage({ user, token, data }) {
-  // const [loan, setLoan] = useState([]);
-  const myFirstshipID = 'ckztxz0qi6083315s6qk3n5ho4';
   const [loan, setLoan] = useLocalStorage('loan', []);
  
   return (
@@ -26,7 +23,7 @@ export default function UserStatusPage({ user, token, data }) {
             <p>{loan.status} </p>
           </div>
         ) : (
-          data.map(loan => (
+          data?.map(loan => (
             <div key={loan.type}>
               <p>{loan.amount} Credits</p>
               <p>Rate: {loan.rate}</p>
@@ -54,7 +51,7 @@ export default function UserStatusPage({ user, token, data }) {
       const data = await response.json();
       setLoan(data.loan);
       window.location.reload();
-      alert('Transaction successfull!');
+      alert('Transaction successfully!');
     }
   }
 }

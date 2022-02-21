@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import UserStatusPage from './UserStatusPage';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage({ token, user, onLogin, isUsernameTaken }) {

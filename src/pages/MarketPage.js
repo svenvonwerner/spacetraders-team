@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 import { Button } from './LoginPage.js';
 
-export default function MarketPage({ ships, user, token, myShips, setMyShips }) {
-
-  
+export default function MarketPage({
+  ships,
+  user,
+  token,
+  myShips,
+  setMyShips,
+}) {
   return (
     <main>
       <h1>Marketplace</h1>
       {user && user.credits} Credits
       <p>List of ships...</p>
       <ShipListContainer>
-        {ships.map((ship, index) => (
+        {ships?.map((ship, index) => (
           <ShipList key={ship.type} role="list">
             <ShipListItem>Manufacturer: {ship.manufacturer}</ShipListItem>
             <ShipListItem>Type: {ship.type}</ShipListItem>
@@ -31,7 +35,6 @@ export default function MarketPage({ ships, user, token, myShips, setMyShips }) 
       </ShipListContainer>
     </main>
   );
-  
 
   async function handleBuy(e) {
     const arrayOfLocations = ships.map(
@@ -53,7 +56,7 @@ export default function MarketPage({ ships, user, token, myShips, setMyShips }) 
       const data = await response.json();
       setMyShips([...myShips, data.ship]);
       window.location.reload();
-      alert('Nice choice!!!')
+      alert('Nice choice!!!');
     }
   }
 }
